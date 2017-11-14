@@ -1,7 +1,7 @@
 export function getVacancies() {
   return dispatch => {
     if (localStorage.getItem('vacancies')) {
-      dispatch({type: 'GET_VACANCIES', payload: JSON.parse(localStorage.getItem('vacancies'))});
+      dispatch({type: 'SET_VACANCIES', payload: JSON.parse(localStorage.getItem('vacancies'))});
     } else {
       fetch('https://arainay.github.io/vacancies/api/vacancies.json')
         .then(
@@ -13,7 +13,7 @@ export function getVacancies() {
         )
         .then(json => {
           localStorage.setItem('vacancies', JSON.stringify(json));
-          dispatch({type: 'GET_VACANCIES', payload: json});
+          dispatch({type: 'SET_VACANCIES', payload: json});
         })
         .catch(err => console.error(err.message));
     }
@@ -24,7 +24,7 @@ export function getVacancyByd(id) {
   return dispatch => {
     if (localStorage.getItem('vacancies')) {
       let storage = JSON.parse(localStorage.getItem('vacancies'));
-      dispatch({type: 'GET_VACANCIES', payload: storage.filter(vacancy => vacancy.id == id)});
+      dispatch({type: 'SET_VACANCIES', payload: storage.filter(vacancy => vacancy.id == id)});
     } else {
       fetch('https://arainay.github.io/vacancies/api/vacancies.json')
         .then(
@@ -36,7 +36,7 @@ export function getVacancyByd(id) {
         )
         .then(vacancies => {
           let json = vacancies.filter(vacancy => vacancy.id == id);
-          dispatch({type: 'GET_VACANCY', payload: json});
+          dispatch({type: 'SET_VACANCY', payload: json});
         })
         .catch(err => console.error(err.message));
     }
@@ -57,7 +57,7 @@ export function addVacancy(title, assignees, description) {
       description: description
     });
     localStorage.setItem('vacancies', JSON.stringify(storage));
-    dispatch({ type: 'GET_VACANCIES', payload: storage });
+    dispatch({ type: 'SET_VACANCIES', payload: storage });
   }
 }
 
@@ -72,7 +72,7 @@ export function editVacancy(id, title, assignees, description) {
       }
     });
     localStorage.setItem('vacancies', JSON.stringify(storage));
-    dispatch({ type: 'GET_VACANCIES', payload: storage });
+    dispatch({ type: 'SET_VACANCIES', payload: storage });
   }
 }
 
@@ -86,7 +86,7 @@ export function getUsers() {
           throw new Error(response.status);
         }
       )
-      .then(json => { dispatch( { type: 'GET_USERS', payload: json } ); })
+      .then(json => { dispatch( { type: 'SET_USERS', payload: json } ); })
       .catch(err => console.error(err.message));
   };
 }
@@ -103,7 +103,7 @@ export function getUsersByIds(ids) {
       )
       .then(users => {
         let json = users.filter(user => ids.includes(user.id));
-        dispatch( { type: 'GET_USERS_BY_VACANCY', payload: json } );
+        dispatch( { type: 'SET_USERS_BY_VACANCY', payload: json } );
       })
       .catch(err => console.error(err.message));
   };
