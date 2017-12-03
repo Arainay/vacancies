@@ -9,8 +9,7 @@ import Filter from './Filter';
 import Table from './Table';
 
 class Vacancies extends PureComponent {
-  constructor(props) {
-    super(props);
+  componentDidMount() {
     this.props.actions.getVacancies();
     this.props.actions.getUsers();
   }

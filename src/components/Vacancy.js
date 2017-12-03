@@ -6,8 +6,7 @@ import { Link, withRouter } from 'react-router-dom';
 import * as actions from '../actions/';
 
 class Vacancy extends PureComponent {
-  constructor(props) {
-    super(props);
+  componentDidMount() {
     if (this.props.match.params.id > 0) {
       this.props.actions.getVacancyByd(this.props.match.params.id);
       this.props.actions.getUsers();
